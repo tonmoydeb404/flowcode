@@ -12,11 +12,22 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 
+import ConditionShape from "@/components/shapes/condition-shape copy";
+import InputOutputShape from "@/components/shapes/input-output-shape";
+import ProcessShape from "@/components/shapes/process-shape";
+import StartEndShape from "@/components/shapes/start-end-shape";
 import "@xyflow/react/dist/style.css";
 import { nanoid } from "nanoid";
 import { DragEventHandler, useCallback } from "react";
 import Elements from "./sections/elements";
 import { Shape } from "./types";
+
+const nodeTypes = {
+  [Shape.CONDITION]: ConditionShape,
+  [Shape.INPUT_OUTPUT]: InputOutputShape,
+  [Shape.PROCESS]: ProcessShape,
+  [Shape.START_END]: StartEndShape,
+};
 
 const Editor = () => {
   const { screenToFlowPosition } = useReactFlow();
@@ -36,27 +47,20 @@ const Editor = () => {
     event.preventDefault();
     const type = event.dataTransfer.getData("text/plain") as Shape;
 
-    if (
-      ![
-        Shape.CONNECTOR,
-        Shape.DECISION,
-        Shape.PROCESS,
-        Shape.START_END,
-      ].includes(type)
-    )
-      return;
+    if (!Shape[type]) return;
 
     const position = screenToFlowPosition({
       x: event.clientX,
       y: event.clientY,
     });
-    const item: Node = { id: nanoid(), data: { label: "Untitled" }, position };
+    const item: Node = {
+      id: nanoid(),
+      data: { label: "Untitled" },
+      type,
+      position,
+    };
 
-    setNodes((prev) => {
-      console.log({ prev });
-
-      return [...prev, item];
-    });
+    setNodes((prev) => [...prev, item]);
   };
 
   return (
@@ -71,6 +75,7 @@ const Editor = () => {
         onConnect={onConnect}
         fitView
         defaultEdgeOptions={{ animated: true }}
+        nodeTypes={nodeTypes}
       >
         <Controls />
         <Panel position="bottom-center">

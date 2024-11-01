@@ -1,6 +1,10 @@
 export enum Shape {
   "PROCESS" = "PROCESS",
-  "DECISION" = "DECISION",
+  "CONDITION" = "CONDITION",
   "START_END" = "START_END",
-  "CONNECTOR" = "CONNECTOR",
+  "INPUT_OUTPUT" = "INPUT_OUTPUT",
 }
+
+export type ShapeData = {
+  label: string;
+};

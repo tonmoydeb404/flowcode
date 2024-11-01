@@ -18,6 +18,7 @@ const Elements = (_props: Props) => {
           key={item.type}
           draggable
           onDragStart={(e) => onDragStart(e, item.type)}
+          className="w-20"
         >
           {item.icon}
         </button>

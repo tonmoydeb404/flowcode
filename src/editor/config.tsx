@@ -1,22 +1,23 @@
-import {
-  LucideCircle,
-  LucideDiamond,
-  LucideRectangleHorizontal,
-} from "lucide-react";
+import { Condition, InputOutput, Process, StartEnd } from "@/assets/shapes";
 import { ReactNode } from "react";
+import { ReactSVG } from "react-svg";
 import { Shape } from "./types";
 
 export const elementsConfig: { type: Shape; icon: ReactNode }[] = [
   {
     type: Shape.START_END,
-    icon: <LucideCircle size={30} />,
+    icon: <ReactSVG src={StartEnd} />,
   },
   {
-    type: Shape.DECISION,
-    icon: <LucideDiamond size={30} />,
+    type: Shape.CONDITION,
+    icon: <ReactSVG src={Condition} />,
+  },
+  {
+    type: Shape.INPUT_OUTPUT,
+    icon: <ReactSVG src={InputOutput} />,
   },
   {
     type: Shape.PROCESS,
-    icon: <LucideRectangleHorizontal size={30} />,
+    icon: <ReactSVG src={Process} />,
   },
 ];
