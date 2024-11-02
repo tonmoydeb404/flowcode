@@ -1,6 +1,6 @@
-import Condition from "./condition.svg";
-import InputOutput from "./input-output.svg";
-import Process from "./process.svg";
-import StartEnd from "./start-end.svg";
+import Condition from "./condition.svg?react";
+import InputOutput from "./input-output.svg?react";
+import Process from "./process.svg?react";
+import StartEnd from "./start-end.svg?react";
 
 export { Condition, InputOutput, Process, StartEnd };

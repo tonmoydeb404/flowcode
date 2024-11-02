@@ -13,10 +13,7 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 
-import ConditionShape from "@/components/shapes/condition-shape copy";
-import InputOutputShape from "@/components/shapes/input-output-shape";
-import ProcessShape from "@/components/shapes/process-shape";
-import StartEndShape from "@/components/shapes/start-end-shape";
+import { FlowShape } from "@/components/shapes";
 import "@xyflow/react/dist/style.css";
 import { nanoid } from "nanoid";
 import {
@@ -27,13 +24,10 @@ import {
 } from "react";
 import DetailsSection from "./sections/details";
 import ElementsSection from "./sections/elements";
-import { Shape } from "./types";
+import { Shape, ShapeData } from "./types";
 
 const nodeTypes = {
-  [Shape.CONDITION]: ConditionShape,
-  [Shape.INPUT_OUTPUT]: InputOutputShape,
-  [Shape.PROCESS]: ProcessShape,
-  [Shape.START_END]: StartEndShape,
+  FLOW: FlowShape,
 };
 
 const Editor = () => {
@@ -69,10 +63,18 @@ const Editor = () => {
       x: event.clientX,
       y: event.clientY,
     });
+
+    const data: ShapeData = {
+      label: "Untitled",
+      fill: "#fff",
+      stroke: "#000",
+      type,
+    };
+
     const item: Node = {
       id: nanoid(),
-      data: { label: "Untitled" },
-      type,
+      data,
+      type: "FLOW",
       position,
     };
 

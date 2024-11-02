@@ -7,4 +7,7 @@ export enum Shape {
 
 export type ShapeData = {
   label: string;
+  fill: string;
+  stroke: string;
+  type: Shape;
 };
