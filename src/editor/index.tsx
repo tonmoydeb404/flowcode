@@ -5,6 +5,7 @@ import {
   Controls,
   Edge,
   Node,
+  OnSelectionChangeFunc,
   Panel,
   ReactFlow,
   useEdgesState,
@@ -18,8 +19,9 @@ import ProcessShape from "@/components/shapes/process-shape";
 import StartEndShape from "@/components/shapes/start-end-shape";
 import "@xyflow/react/dist/style.css";
 import { nanoid } from "nanoid";
-import { DragEventHandler, useCallback } from "react";
-import Elements from "./sections/elements";
+import { DragEventHandler, useCallback, useState } from "react";
+import DetailsSection from "./sections/details";
+import ElementsSection from "./sections/elements";
 import { Shape } from "./types";
 
 const nodeTypes = {
@@ -33,6 +35,15 @@ const Editor = () => {
   const { screenToFlowPosition } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+
+  const onSelectionChange: OnSelectionChangeFunc = ({ nodes }) => {
+    if ((nodes.length = 1)) {
+      setSelectedNode(nodes[0]?.id || null);
+    } else {
+      setSelectedNode(null);
+    }
+  };
 
   const onConnect = useCallback(
     (params: any) => setEdges((els) => addEdge(params, els)),
@@ -76,10 +87,14 @@ const Editor = () => {
         fitView
         defaultEdgeOptions={{ animated: true }}
         nodeTypes={nodeTypes}
+        onSelectionChange={onSelectionChange}
       >
         <Controls />
         <Panel position="bottom-center">
-          <Elements />
+          <ElementsSection />
+        </Panel>
+        <Panel position="top-right">
+          {selectedNode && <DetailsSection nodeId={selectedNode} />}
         </Panel>
         <Background variant={BackgroundVariant.Lines} />
       </ReactFlow>

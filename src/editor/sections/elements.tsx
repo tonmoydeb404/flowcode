@@ -3,7 +3,7 @@ import { Shape } from "../types";
 
 type Props = {};
 
-const Elements = (_props: Props) => {
+const ElementsSection = (_props: Props) => {
   const onDragStart = (
     event: React.DragEvent<HTMLButtonElement>,
     type: Shape
@@ -27,4 +27,4 @@ const Elements = (_props: Props) => {
   );
 };
 
-export default Elements;
+export default ElementsSection;
