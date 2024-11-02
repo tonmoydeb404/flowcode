@@ -22,6 +22,7 @@ import {
   useCallback,
   useState,
 } from "react";
+import { ElementConfigData } from "./config";
 import DetailsSection from "./sections/details";
 import ElementsSection from "./sections/elements";
 import { Shape, ShapeData } from "./types";
@@ -56,30 +57,35 @@ const Editor = () => {
 
   const onDrop: DragEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
-    const type = event.dataTransfer.getData("text/plain") as Shape;
+    try {
+      const dropData = event.dataTransfer.getData("application/json");
+      const { fill, stroke, type } = JSON.parse(dropData) as ElementConfigData;
 
-    if (!Shape[type]) return;
+      if (!Shape[type]) return;
 
-    const position = screenToFlowPosition({
-      x: event.clientX,
-      y: event.clientY,
-    });
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
 
-    const data: ShapeData = {
-      label: "Untitled",
-      fill: "#fff",
-      stroke: "#000",
-      type,
-    };
+      const data: ShapeData = {
+        label: "Untitled",
+        fill,
+        stroke,
+        type,
+      };
 
-    const item: Node = {
-      id: nanoid(),
-      data,
-      type: "FLOW",
-      position,
-    };
+      const item: Node = {
+        id: nanoid(),
+        data,
+        type: "FLOW",
+        position,
+      };
 
-    setNodes((prev) => [...prev, item]);
+      setNodes((prev) => [...prev, item]);
+    } catch (error) {
+      console.log("Error in Drop: ", error);
+    }
   };
 
   const handleDelete = (id: string) => {

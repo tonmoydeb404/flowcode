@@ -5,6 +5,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { fills, strokes } from "@/editor/config";
 import { useReactFlow } from "@xyflow/react";
 import { useEffect, useState } from "react";
 import { ShapeData } from "../../types";
@@ -15,9 +16,6 @@ type Props = {
 };
 
 type Config = Pick<ShapeData, "fill" | "label" | "stroke">;
-
-const fills = ["#F9A03F", "#DDF9C1", "#FF5154", "#7D8CC4", "#2AB7CA", "#fff"];
-const strokes = ["#fff", "#000"];
 
 const DetailsSection = (props: Props) => {
   const { nodeId } = props;

@@ -1,14 +1,13 @@
-import { elementsConfig } from "../config";
-import { Shape } from "../types";
+import { ElementConfigData, elementsConfig } from "../config";
 
 type Props = {};
 
 const ElementsSection = (_props: Props) => {
   const onDragStart = (
     event: React.DragEvent<HTMLButtonElement>,
-    type: Shape
+    data: ElementConfigData
   ) => {
-    event.dataTransfer?.setData("text/plain", type);
+    event.dataTransfer?.setData("application/json", JSON.stringify(data));
   };
 
   return (
@@ -17,7 +16,13 @@ const ElementsSection = (_props: Props) => {
         <button
           key={item.type}
           draggable
-          onDragStart={(e) => onDragStart(e, item.type)}
+          onDragStart={(e) =>
+            onDragStart(e, {
+              fill: item.fill,
+              stroke: item.stroke,
+              type: item.type,
+            })
+          }
           className="w-20"
         >
           {item.icon}

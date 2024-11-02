@@ -12,7 +12,7 @@ const Icon = (props: Props) => {
   if (type === Shape.CONDITION) {
     return (
       <>
-        <Condition fill={data.fill} stroke={data.stroke} />
+        <Condition fill={data.fill} stroke={data.stroke} fillOpacity={0.4} />
       </>
     );
   }
@@ -20,7 +20,7 @@ const Icon = (props: Props) => {
   if (type === Shape.INPUT_OUTPUT) {
     return (
       <>
-        <InputOutput fill={data.fill} stroke={data.stroke} />
+        <InputOutput fill={data.fill} stroke={data.stroke} fillOpacity={0.4} />
       </>
     );
   }
@@ -28,7 +28,7 @@ const Icon = (props: Props) => {
   if (type === Shape.PROCESS) {
     return (
       <>
-        <Process fill={data.fill} stroke={data.stroke} />
+        <Process fill={data.fill} stroke={data.stroke} fillOpacity={0.4} />
       </>
     );
   }
@@ -36,7 +36,7 @@ const Icon = (props: Props) => {
   if (type === Shape.START_END) {
     return (
       <>
-        <StartEnd fill={data.fill} stroke={data.stroke} />
+        <StartEnd fill={data.fill} stroke={data.stroke} fillOpacity={0.4} />
       </>
     );
   }
