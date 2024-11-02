@@ -19,7 +19,12 @@ import ProcessShape from "@/components/shapes/process-shape";
 import StartEndShape from "@/components/shapes/start-end-shape";
 import "@xyflow/react/dist/style.css";
 import { nanoid } from "nanoid";
-import { DragEventHandler, useCallback, useState } from "react";
+import {
+  DragEventHandler,
+  KeyboardEventHandler,
+  useCallback,
+  useState,
+} from "react";
 import DetailsSection from "./sections/details";
 import ElementsSection from "./sections/elements";
 import { Shape } from "./types";
@@ -74,6 +79,24 @@ const Editor = () => {
     setNodes((prev) => [...prev, item]);
   };
 
+  const handleDelete = (id: string) => {
+    setNodes((prev) => {
+      return prev.filter((n) => n.id !== id);
+    });
+    setEdges((prev) => {
+      return prev.filter((e) => {
+        return ![e.source, e.target].includes(id);
+      });
+    });
+  };
+
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+    const target = event.target as HTMLDivElement;
+    if (event && event.key === "Delete") {
+      if (target?.dataset?.id) handleDelete(target.dataset.id);
+    }
+  };
+
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
@@ -88,8 +111,9 @@ const Editor = () => {
         defaultEdgeOptions={{ animated: true }}
         nodeTypes={nodeTypes}
         onSelectionChange={onSelectionChange}
+        onKeyDown={onKeyDown}
       >
-        <Controls />
+        <Controls></Controls>
         <Panel position="bottom-center">
           <ElementsSection />
         </Panel>

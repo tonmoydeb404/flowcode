@@ -20,7 +20,7 @@ const ConditionShape = (props: Props) => {
       </div>
       <NodeResizer
         color="#ff0071"
-        isVisible={selected}
+        isVisible={!!selected}
         minWidth={100}
         minHeight={30}
         keepAspectRatio
