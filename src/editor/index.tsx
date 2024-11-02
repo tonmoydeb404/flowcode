@@ -35,6 +35,7 @@ const Editor = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [isInterective, setIsInterective] = useState(true);
 
   const onSelectionChange: OnSelectionChangeFunc = ({ nodes }) => {
     if ((nodes.length = 1)) {
@@ -115,8 +116,8 @@ const Editor = () => {
         onSelectionChange={onSelectionChange}
         onKeyDown={onKeyDown}
       >
-        <Controls></Controls>
-        <Panel position="bottom-center">
+        <Controls onInteractiveChange={setIsInterective}></Controls>
+        <Panel position="bottom-center" hidden={!isInterective}>
           <ElementsSection />
         </Panel>
         <Panel position="top-right">
